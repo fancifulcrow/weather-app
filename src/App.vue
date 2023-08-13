@@ -1,9 +1,17 @@
 <template>
-  <div class="flex w-full h-screen">
-    <h1 class="text-5xl font-OpenSans text-emerald-600 text-center m-auto">Weather App with Vue 3</h1>
+  <div class="relative">
+    <div class="top-0 sticky p-8 flex justify-center items-center gap-8">
+      <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/about">About</RouterLink>
+    </div>
+    <RouterView/>
   </div>
 </template>
 
 <script setup>
-
+import {RouterLink, RouterView} from "vue-router";
 </script>
+
+<style lang="scss" scoped>
+
+</style>
