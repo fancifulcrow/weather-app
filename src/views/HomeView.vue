@@ -1,13 +1,11 @@
 <template>
-  <div class="flex justify-center items-center w-full h-screen text-center">
-    <h1 class="text-emerald-500">
-      Home
-    </h1>
+  <div class="flex justify-center items-center">
+    <CityView/>
   </div>
 </template>
 
 <script setup>
-
+import CityView from '../components/CityView.vue';
 </script>
 
 <style lang="scss" scoped>

@@ -1,17 +1,18 @@
 <template>
-  <div class="relative">
-    <div class="top-0 sticky p-8 flex justify-center items-center gap-8">
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/about">About</RouterLink>
+  <div class=" relative w-full h-screen font-serif bg-sky-50">
+    <SearchBar/>
+    <div class="w-full h-full">
+      <RouterView />
     </div>
-    <RouterView/>
+    <NavigationBar/>
+
   </div>
 </template>
 
 <script setup>
-import {RouterLink, RouterView} from "vue-router";
+import { RouterLink, RouterView } from "vue-router";
+import NavigationBar from "./components/NavigationBar.vue";
+import SearchBar from "./components/SearchBar.vue";
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

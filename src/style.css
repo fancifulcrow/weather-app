@@ -4,10 +4,12 @@
 
 @layer base{
     h1 {
-        @apply text-5xl;
+        
     }
 }
 
 @layer components{
-
+    .box-width {
+        @apply w-full max-w-3xl px-4;
+    }
 }
