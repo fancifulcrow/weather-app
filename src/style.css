@@ -3,13 +3,21 @@
 @tailwind utilities;
 
 @layer base{
-    h1 {
+    h1, h2, h3, h4, h5, h6 {
         
     }
 }
 
 @layer components{
     .box-width {
-        @apply w-full max-w-3xl px-4;
+        @apply w-full max-w-3xl;
+    }
+
+    .colored-text-1 {
+        @apply text-blue-600;
+    }
+
+    .colored-text-2 {
+        @apply text-slate-600;
     }
 }

@@ -1,14 +1,14 @@
 <template>
-    <div class="absolute top-0 flex justify-center items-center w-full h-16 bg-white">
-        <div class="box-width h-full flex justify-between items-center">
+    <div class="absolute top-0 flex justify-center items-center w-full h-16 bg-white text-xl">
+        <div class="box-width px-4 h-full flex justify-between items-center">
             <div>
-                <span>Back</span>
+                <span><i class="fa-solid fa-arrow-left"></i></span>
             </div>
             <div>
-                <h1>Weather</h1>
+                <h1 class="font-bold">Weather</h1>
             </div>
             <div>
-                <span>Search</span>
+                <span><i class="fa-solid fa-magnifying-glass"></i></span>
             </div>
         </div>
     </div>
