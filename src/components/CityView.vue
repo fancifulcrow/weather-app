@@ -1,13 +1,17 @@
 <template>
     <div class="w-full h-screen flex flex-col items-center justify-center gap-4 mx-2">
-        <div class="flex flex-col justify-center items-center text-center my-2">
-            <div class="w-48 h-48"><img src="../assets/cloudy.png" alt="cloudy"></div>
-            <div class="flex flex-row items-baseline justify-center text-center pt-4 pb-2">
-                <h1 class="text-5xl">32</h1>
-                <span class="text-xl">°C</span>
+        <div class="flex sm:flex-col justify-center items-center sm:text-center my-2 gap-8 sm:gap-0">
+            <div class="w-32 h-32 sm:w-48 sm:h-48"><img src="../assets/cloudy.png" alt="cloudy"></div>
+            <div class="">
+                <div class="flex flex-row items-baseline sm:justify-center sm:text-center pt-4 pb-2">
+                    <h1 class="text-5xl">32</h1>
+                    <span class="text-xl">°C</span>
+                </div>
+                    <div class="">
+                        <h2 class="uppercase text-lg colored-text-2">Abuja, FCT</h2>
+                        <span class="colored-text-2">Cloudy</span>
+                    </div>
             </div>
-                <h2 class="uppercase text-lg colored-text-2">London, UK</h2>
-                <span class="colored-text-2">Cloudy</span>
         </div>
         <div class="box-width h-32 bg-white rounded-lg grid grid-cols-3 shadow-lg">
             <div class="w-full h-full flex flex-col items-center justify-center">
