@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen w-full flex justify-center">
+  <div class="h-screen w-full flex justify-center font-Quicksand">
       <RouterView />
   </div>
 </template>

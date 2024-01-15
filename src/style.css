@@ -10,6 +10,6 @@
 
 @layer components{
     .box-width {
-        @apply w-full max-w-xl px-3 bg-red-700;
+        @apply w-full max-w-xl px-3;
     }
 }

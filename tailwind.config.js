@@ -8,7 +8,7 @@ module.exports = {
         "secondary-Color" : "#333333",
       },
       fontFamily: {
-        "Montserrat" : ["'Montserrat', sans-serif"],
+        "Quicksand" : ["Quicksand', sans-serif"],
       },
     },
   },
