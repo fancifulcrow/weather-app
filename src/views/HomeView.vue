@@ -1,11 +1,11 @@
 <template>
-  <div class="box-width">
-    <CityView/>
+  <div>
+
   </div>
 </template>
 
-<script setup>
-import CityView from '../components/CityView.vue';
+<script>
+
 </script>
 
 <style lang="scss" scoped>

@@ -1,16 +1,16 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}", ],
-  theme: {
-    extend: {
-      colors: {
-        "primary-Color" : "#dddddd",
-        "secondary-Color" : "#333333",
-      },
-      fontFamily: {
-        "Quicksand" : ["Quicksand', sans-serif"],
-      },
+export default {
+    content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
+    theme: {
+        extend: {},
+        fontFamily: {
+            JosefinSlab: ["'Josefin Slab', serif"],
+            JosefinSans: ["'Josefin Sans', sans-serif"]
+        },
+        container: {
+            padding: "2rem",
+            center: true,
+        }
     },
-  },
-  plugins: [],
+    plugins: []
 }
