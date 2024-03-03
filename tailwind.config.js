@@ -4,8 +4,8 @@ export default {
     theme: {
         extend: {},
         fontFamily: {
-            JosefinSlab: ["'Josefin Slab', serif"],
-            JosefinSans: ["'Josefin Sans', sans-serif"]
+            Roboto: ["'Roboto', sans-serif"],
+            Montserrat: ["'Montserrat', sans-serif"]
         },
         container: {
             padding: "2rem",
