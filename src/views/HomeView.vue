@@ -3,15 +3,15 @@
     <div class="pt-4 mb-8 relative">
       <input type="text" v-model="searchQuery" @input="getSearchResults" placeholder="Search for a city or state" class="py-2 px-1 w-full bg-transparent border-b border-blue-400 focus:border-blue-700 focus:outline-none focus:shadow-sm placeholder:text-blue-400"/>
 
-      <ul class="absolute w-full shadow-md py-2 px-1 top-16" v-if="searchResults">
+      <ul class="absolute w-full shadow-md py-2 px-1 top-16" v-if="mapboxSearchResults">
 
         <p v-if="searchError" class="py-2">Sorry, something went wrong. Please try again.</p>
 
-        <p v-if="!serverError && searchResults.length === 0" class="py-2">No results match your query, try a different term.</p>
+        <p v-if="!serverError && mapboxSearchResults.length === 0" class="py-2">No results match your query, try a different term.</p>
 
         <template v-else>
-          <li v-for="searchResult in searchResults" :key="searchResult.id" class="py-2 cursor-pointer hover:text-blue-400 duration-150" @click="previewCity(searchResult)">
-            {{ `${searchResult.name}, ${searchResult.admin1}, ${searchResult.country}` }}
+          <li v-for="searchResult in mapboxSearchResults" :key="searchResult.id" class="py-2 cursor-pointer hover:text-blue-400 duration-150" @click="previewCity(searchResult)">
+            {{ searchResult.place_name }}
           </li>
         </template>
       </ul>
@@ -25,11 +25,11 @@ import { ref } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 
-// const mapboxAPIKey ="pk.eyJ1Ijoiam9obmtvbWFybmlja2kiLCJhIjoiY2t5NjFzODZvMHJkaDJ1bWx6OGVieGxreSJ9.IpojdT3U3NENknF6_WhR2Q";
+const mapboxAPIKey ="pk.eyJ1Ijoiam9obmtvbWFybmlja2kiLCJhIjoiY2t5NjFzODZvMHJkaDJ1bWx6OGVieGxreSJ9.IpojdT3U3NENknF6_WhR2Q";
 
 const searchQuery = ref("");
 const queryTimeout = ref(null);
-const searchResults = ref(null);
+const mapboxSearchResults = ref(null);
 const searchError = ref(null);
 
 const getSearchResults = () => {
@@ -37,32 +37,30 @@ const getSearchResults = () => {
   queryTimeout.value = setTimeout(async () => {
     if (searchQuery.value !== "") {
       try{
-        const result = await axios.get(`https://geocoding-api.open-meteo.com/v1/search?name=${searchQuery.value}`);
+        const result = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${searchQuery.value}.json?access_token=${mapboxAPIKey}&types=place`);
 
-        searchResults.value = result.data.results;
-        
+        mapboxSearchResults.value = result.data.features;
       } catch{
         searchError.value = true;
       }
 
       return;
     }
-    searchResults.value = null;
+    mapboxSearchResults.value = null;
   }, 300);
 };
 
 const router = useRouter();
 
 const previewCity = (searchResult) => {
-  const city = searchResult.name;
-  const state = searchResult.admin1;
+  const [city, state] = searchResult.place_name.split(",");
 
   router.push({
     name: 'cityView',
-    params: { state: state, city: city},
+    params: { state: state.replaceAll(" ", ""), city: city},
     query: {
-      long: searchResult.longitude,
-      lat: searchResult.latitude,
+      long: searchResult.geometry.coordinates[0],
+      lat: searchResult.geometry.coordinates[1],
       preview: true,
     }
   });

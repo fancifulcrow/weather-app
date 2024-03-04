@@ -1,5 +1,5 @@
 <template>
-    <div class="container max-w-2xl">
+    <div class="">
         <Suspense>
             <AsyncCityView/>
             <template #fallback>

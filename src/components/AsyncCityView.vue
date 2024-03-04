@@ -1,5 +1,8 @@
 <template>
-    <div>
+    <div class="flex flex-col flex-1 items-center">
+        <div v-if="route.query.preview" class="p-4 w-full text-center bg-blue-700 text-blue-200">
+            <p>You are currently previewing the city, click the "+" icon to start tracking this city.</p>
+        </div>
     </div>
 </template>
 
