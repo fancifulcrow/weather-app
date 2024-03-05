@@ -8,9 +8,9 @@
             </RouterLink>
 
             <div class="flex gap-4 flex-1 justify-end">
-                <i class="fa-solid fa-circle-info text-xl hover:text-white duration-150 cursor-pointer" @click="toggleModal"></i>
+                <i class="fa-solid fa-circle-info text-xl hover:text-blue-400 duration-150 cursor-pointer" @click="toggleModal"></i>
 
-                <i class="fa-solid fa-plus text-xl hover:text-white duration-150 cursor-pointer"></i>
+                <i class="fa-solid fa-plus text-xl hover:text-blue-400 duration-150 cursor-pointer"></i>
             </div>
             <BaseModal :modalActive="modalActive" @close-modal="toggleModal">
                 <h1 class="text-2xl">About</h1>

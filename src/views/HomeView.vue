@@ -1,7 +1,7 @@
 <template>
   <main class="container max-w-2xl">
     <div class="pt-4 mb-8 relative">
-      <input type="text" v-model="searchQuery" @input="getSearchResults" placeholder="Search for a city or state" class="py-2 px-1 w-full bg-transparent border-b border-blue-400 focus:border-blue-700 focus:outline-none focus:shadow-sm placeholder:text-blue-400"/>
+      <input type="text" v-model="searchQuery" @input="getSearchResults" placeholder="Search for a city or state" class="py-2 px-1 w-full bg-transparent border-b border-blue-700 border-opacity-40 focus:border-opacity-100 focus:outline-none focus:shadow-sm placeholder:text-blue-700 placeholder:text-opacity-40"/>
 
       <ul class="absolute w-full shadow-md py-2 px-1 top-16" v-if="mapboxSearchResults">
 
@@ -53,7 +53,7 @@ const getSearchResults = () => {
 const router = useRouter();
 
 const previewCity = (searchResult) => {
-  const [city, state] = searchResult.place_name.split(",");
+  const [city, state, country] = searchResult.place_name.split(",");
 
   router.push({
     name: 'cityView',
@@ -61,6 +61,7 @@ const previewCity = (searchResult) => {
     query: {
       long: searchResult.geometry.coordinates[0],
       lat: searchResult.geometry.coordinates[1],
+      country: country,
       preview: true,
     }
   });
