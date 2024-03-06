@@ -3,7 +3,9 @@
         <Suspense>
             <AsyncCityView/>
             <template #fallback>
-                <p>loading...</p>
+                <div class="text-center mt-48">
+                    <p class="text-xl">Loading... Please Wait</p>
+                </div>
             </template>
         </Suspense>
     </div>

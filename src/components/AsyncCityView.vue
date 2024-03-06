@@ -1,17 +1,17 @@
 <template>
     <div class="flex flex-col flex-1 items-center">
         <!-- Banner -->
-        <div v-if="route.query.preview" class="p-4 w-full text-center bg-blue-700 text-blue-200">
+        <div v-if="route.query.preview" class="p-4 w-full text-center bg-secondary text-primary">
             <p>You are currently previewing the city, click the "+" icon to start tracking this city.</p>
         </div>
 
         <!-- Weather Overview -->
         <div class="flex flex-col items-center py-8">
             <h1 class="text-4xl mb-2">{{ route.params.city }}</h1>
-            <h2 class="uppercase"> {{ route.query.country}}</h2>
+            <h2 class="uppercase">{{ route.params.state }}, {{ route.query.country}}</h2>
             <p class="text-sm mb-12">
                 {{ 
-                    new Date(utcDate.getTime() + (weatherData.utc_offset_seconds * 1000)).toLocaleDateString("en-us",
+                    new Date(utcDate.getTime() + (weatherData.utc_offset_seconds * 1000) - (timezoneOffset * 60 * 1000)).toLocaleDateString("en-GB",
                     {
                         weekday: "short",
                         day: "2-digit",
@@ -19,7 +19,7 @@
                     })
                 }}, 
                 {{
-                    new Date(utcDate.getTime() + (weatherData.utc_offset_seconds * 1000)).toLocaleTimeString("en-us",
+                    new Date(utcDate.getTime() + (weatherData.utc_offset_seconds * 1000) - (timezoneOffset * 60 * 1000)).toLocaleTimeString("en-GB",
                     {
                         timeStyle: "short",
                         hour12: false,
@@ -43,31 +43,74 @@
             </div>
         </div>
 
-        <hr class="border-blue-700 border-opacity-40 border w-full max-w-2xl">
+        <hr class="border-secondary border-opacity-40 border w-full max-w-2xl">
 
         <!-- Hourly Weather -->
         <div class="max-w-2xl w-full py-12">
             <div class="mx-8">
                 <h2 class="mb-4">Hourly Weather</h2>
-                <div class="flex gap-10 overflow-x-scroll scroll">
-                    <div></div>
+                <div class="flex gap-10 overflow-x-scroll py-2">
+                    <div v-for="i in hoursRange" :key="i" class="flex flex-col gap-4 items-center pb-4">
+                        <p>
+                            {{ weatherData.hourly.time[i].split("T")[1] }}
+                        </p>
+                        <p v-html="getWeatherIcon(weatherData.hourly.weather_code[i], weatherData.hourly.is_day[i])" class="text-xl"></p>
+
+                        <p>
+                            {{ Math.round(weatherData.hourly.temperature_2m[i]) }}&deg;
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <hr class="border-secondary border-opacity-40 border w-full max-w-2xl">
+
+        <!-- Weekly Weather -->
+        <div class="max-w-2xl w-full py-12">
+            <div class="mx-8">
+                <h2 class="mb-4">7 Days Forcast</h2>
+                <div v-for="i in daysRange" :key="i" class="flex items-center py-2">
+                    <p class="flex-1">
+                        {{
+                            new Date(weatherData.daily.time[i]).toLocaleDateString("en-us", 
+                            {
+                                weekday: "long",
+                            })
+                        }}
+                    </p>
+
+                    <p v-html="getWeatherIcon(weatherData.daily.weather_code[i], 1)" class="text-xl">
+                    </p>
+
+                    <div class="flex flex-1 gap-2 justify-end">
+                        <p>L: {{ Math.round(weatherData.daily.temperature_2m_min[i]) }}&deg;</p>
+                        <p>H: {{ Math.round(weatherData.daily.temperature_2m_max[i]) }}&deg;</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Remove city -->
+        <div class="flex items-center gap-2 py-12 cursor-pointer duration-15 hover:text-red-500" @click="removeCity" v-if="!route.query.preview">
+            <i class="fa-solid fa-trash"></i>
+            <p>Remove City</p>
+        </div>
+
     </div>
 </template>
 
 <script setup>
 import axios from 'axios';
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
 
 const getWeatherData = async () => {
     try {
-        const weatherData = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${route.query.lat}&longitude=${route.query.long}&current=temperature_2m,apparent_temperature,is_day,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto`)
+        const weatherData = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${route.query.lat}&longitude=${route.query.long}&current=temperature_2m,apparent_temperature,is_day,weather_code&hourly=temperature_2m,weather_code,is_day&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto`)
 
-        console.log(typeof weatherData)
+        await new Promise((res) => setTimeout(res, 1000));
         return weatherData.data;
     } catch(err){
         console.log(err);
@@ -75,7 +118,14 @@ const getWeatherData = async () => {
 };
 
 const weatherData = await getWeatherData();
-const utcDate = new Date().getTimezoneOffset();
+const utcDate = new Date();
+const timezoneOffset = -utcDate.getTimezoneOffset();
+
+const startIndex = new Date(utcDate.getTime() + (weatherData.utc_offset_seconds * 1000) - (timezoneOffset * 60 * 1000)).getHours() + 1;
+
+const hoursRange = Array.from({length: 24}, (_, index) => startIndex + index);
+
+const daysRange = Array.from({length: 6}, (_, index) => 1 + index);
 
 const weatherCodes = {
     0: "Clear sky",
@@ -171,5 +221,18 @@ const getWeatherIcon = (weatherCode, is_day) => {
     }
 };
 
-console.log(weatherData);
+const router = useRouter();
+const removeCity = () => {
+    const cities = JSON.parse(localStorage.getItem("savedCities"));
+    const updatedCities = cities.filter((city) => {
+        return city.id !== route.query.id;
+    });
+
+    localStorage.setItem("savedCities", JSON.stringify(updatedCities));
+
+    router.push({
+        name: "home",
+    });
+}
+
 </script>

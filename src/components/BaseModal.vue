@@ -3,9 +3,9 @@
         <Transition name="modal-outer">
             <div v-show="modalActive" class="absolute w-full bg-black bg-opacity-30 h-screen top-0 left-0 flex justify-center items-center px-8">
                 <Transition name="modal-inner">
-                    <div v-if="modalActive" class="p-8 bg-white text-blue-700 font-Montserrat max-w-screen-sm rounded-md">
+                    <div v-if="modalActive" class="p-8 bg-white text-secondary font-Montserrat max-w-screen-sm rounded-md">
                         <slot/>
-                        <button class="text-blue-200 bg-blue-700 py-2 px-6 mt-8 rounded-md hover:bg-blue-200 hover:text-blue-700 duration-150 cursor-pointer" @click="$emit('close-modal')">
+                        <button class="text-primary bg-secondary py-2 px-6 mt-8 rounded-md hover:bg-primary hover:text-secondary duration-150 cursor-pointer" @click="$emit('close-modal')">
                             Close
                         </button>
                     </div>
