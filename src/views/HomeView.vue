@@ -65,7 +65,7 @@ const router = useRouter();
 const previewCity = (searchResult) => {
   const [city, state, country] = searchResult.place_name.split(",");
 
-  /** const isCitySaved = () => {
+  const isCitySaved = () => {
     const savedCities = JSON.parse(localStorage.getItem("savedCities"));
     savedCities.forEach(city => {
       console.log(city)
@@ -73,7 +73,14 @@ const previewCity = (searchResult) => {
     return savedCities.some(city => city.coords.lat == searchResult.geometry.coordinates[1] && city.coords.long == searchResult.geometry.coordinates[0]);
   }
 
-  const previewEnabled = !isCitySaved(); **/
+  let previewEnabled;
+
+  if (localStorage.getItem("savedCities")) {
+    previewEnabled = !isCitySaved();
+  } else {
+    previewEnabled = true;
+  }
+  
 
   router.push({
     name: 'cityView',
@@ -82,8 +89,7 @@ const previewCity = (searchResult) => {
       long: searchResult.geometry.coordinates[0],
       lat: searchResult.geometry.coordinates[1],
       country: country,
-      // ...(previewEnabled && { preview: true })
-      preview: true,
+      ...(previewEnabled && { preview: true })
     }
   });
 };
