@@ -1,14 +1,6 @@
-# .
+# Weather App
 
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+This is a simple weather app built with Vue 3 and Tailwind CSS. It allows users to check the current weather conditions of a location by entering the city name. 
 
 ## Project Setup
 
@@ -33,3 +25,15 @@ npm run build
 ```sh
 npm run lint
 ```
+
+## Screenshot
+<p align="center">
+  <img src="./screenshot.png" />
+</p>
+
+## Technologies Used
+- Vue 3
+- Tailwind CSS
+
+## Credits
+- Weather data provided by [Open-Meteo](https://open-meteo.com/) Weather API.
