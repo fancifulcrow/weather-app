@@ -1,4 +1,5 @@
 # Weather App
+Site is live at: https://fancifulcrow.github.io/weather-app/  
 
 This is a simple weather app built with Vue 3 and Tailwind CSS. It allows users to check the current weather conditions of a location by entering the city name. 
 
